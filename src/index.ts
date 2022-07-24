@@ -1,5 +1,5 @@
 import Table from './Table';
-const MsqldumpDdlParser = (ddl: string): { [s: string]: Table } => {
+const MysqldumpDdlParser = (ddl: string): { [s: string]: Table } => {
   const sentences: string[] = ddl.split(/;/).map((sentence) => sentence.trim());
   const tables: { [s: string]: Table } = {};
   sentences
@@ -11,4 +11,4 @@ const MsqldumpDdlParser = (ddl: string): { [s: string]: Table } => {
   return tables;
 };
 
-export default MsqldumpDdlParser;
+export default MysqldumpDdlParser;
