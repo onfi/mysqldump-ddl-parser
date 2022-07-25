@@ -28,4 +28,27 @@ describe('test index.ts', () => {
     expect('users').toBe(foreignKey.referenceTable);
     expect('id').toBe(foreignKey.referenceColumn);
   });
+
+  it('load oracle ddl', () => {
+    const sql = fs.readFileSync('test/oracle.sql', 'utf-8').toString();
+    const tables = Index(sql, 'oracle');
+    expect(1).toBe(Object.keys(tables).length);
+
+    const users = tables.users;
+    expect('users').toBe(users.name);
+
+    expect(4).toBe(users.columns.length);
+    expect('id').toBe(users.columns[0].name);
+    expect('company_id').toBe(users.columns[1].name);
+    expect('name').toBe(users.columns[2].name);
+    expect('created_at').toBe(users.columns[3].name);
+
+    expect('id').toBe(users.primaryKey[0]);
+
+    expect(1).toBe(users.foreignKeys.length);
+    const foreignKey = users.foreignKeys[0];
+    expect('company_id').toBe(foreignKey.foreignKey);
+    expect('companies').toBe(foreignKey.referenceTable);
+    expect('id').toBe(foreignKey.referenceColumn);
+  });
 });
